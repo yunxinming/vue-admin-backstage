@@ -1,7 +1,10 @@
 package com.ming.admin.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.stereotype.Controller;
+import com.ming.admin.entity.SysUser;
+import com.ming.admin.service.ISysUserService;
+import com.ming.admin.util.Ajax;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -11,8 +14,16 @@ import org.springframework.stereotype.Controller;
  * @author 云欣名
  * @since 2022-07-09
  */
-@Controller
-@RequestMapping("/admin/sysUser")
+@RestController
+@RequestMapping("/admin")
 public class SysUserController {
+
+    @Autowired
+    private ISysUserService userService;
+
+    @PostMapping("/login")
+    public Ajax login(@RequestBody SysUser user){
+        return userService.login(user);
+    }
 
 }

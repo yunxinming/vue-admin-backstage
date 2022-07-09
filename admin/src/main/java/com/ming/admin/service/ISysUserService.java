@@ -2,6 +2,7 @@ package com.ming.admin.service;
 
 import com.ming.admin.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ming.admin.util.Ajax;
 
 /**
  * <p>
@@ -12,5 +13,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2022-07-09
  */
 public interface ISysUserService extends IService<SysUser> {
+    Ajax login(SysUser user);
 
+    SysUser findUserByUsername(String username);
 }
