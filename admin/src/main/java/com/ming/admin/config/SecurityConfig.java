@@ -1,6 +1,8 @@
 package com.ming.admin.config;
 
 import com.ming.admin.filter.JwtAuthenticationTokenFilter;
+import com.ming.admin.handler.RestAuthenticationEntryPoint;
+import com.ming.admin.handler.RestfulAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +21,18 @@ public class SecurityConfig {
     @Lazy
     JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
 
+    @Autowired
+    RestAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Autowired
+    RestfulAccessDeniedHandler accessDeniedHandler;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/admin/login").anonymous();
         http.authorizeRequests().anyRequest().authenticated();
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler).authenticationEntryPoint(authenticationEntryPoint);
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

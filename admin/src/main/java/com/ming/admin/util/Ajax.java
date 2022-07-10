@@ -25,6 +25,9 @@ public class Ajax extends LinkedHashMap<String, Object> {
         return new Ajax(200);
     }
 
+    public static Ajax success(int code, String msg) {
+        return new Ajax(code, msg);
+    }
     public static Ajax success(String msg) {
         return new Ajax(200, msg);
     }
