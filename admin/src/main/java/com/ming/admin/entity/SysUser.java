@@ -197,7 +197,7 @@ public class SysUser implements Serializable, UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (permission == null) return null;
-        return permission.stream().map(p -> new SimpleGrantedAuthority("ROLE_" + p)).collect(Collectors.toList());
+        return permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     public String getPassword() {
