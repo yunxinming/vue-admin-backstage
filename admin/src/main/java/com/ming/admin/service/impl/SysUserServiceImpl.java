@@ -55,6 +55,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser findUserByUsername(String username) {
         SysUser user = this.lambdaQuery().eq(SysUser::getUsername, username).one();
+        if (user == null) return null;
         List<String> perms = menuService.findPermsByUserId(user.getUserId());
         user.setPermission(perms);
         return user;

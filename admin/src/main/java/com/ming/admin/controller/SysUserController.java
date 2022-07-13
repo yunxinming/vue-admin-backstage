@@ -4,6 +4,7 @@ import com.ming.admin.entity.SysUser;
 import com.ming.admin.service.ISysUserService;
 import com.ming.admin.util.Ajax;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,4 +27,9 @@ public class SysUserController {
         return userService.login(user);
     }
 
+    @PreAuthorize("hasAuthority('tool:gen:code')")
+    @GetMapping("/test")
+    public Ajax test() {
+        return Ajax.success("Ok");
+    }
 }
