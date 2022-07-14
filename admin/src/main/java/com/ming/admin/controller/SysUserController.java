@@ -1,11 +1,14 @@
 package com.ming.admin.controller;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import com.ming.admin.entity.SysUser;
 import com.ming.admin.service.ISysUserService;
 import com.ming.admin.util.Ajax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -22,9 +25,12 @@ public class SysUserController {
     @Autowired
     private ISysUserService userService;
 
+
     @PostMapping("/login")
-    public Ajax login(@RequestBody SysUser user){
-        return userService.login(user);
+    public Ajax login(@RequestBody SysUser user, HttpServletRequest request){
+        String clientIP = ServletUtil.getClientIP(request);
+        user.setLoginIp(clientIP);
+        return userService.login(user, request);
     }
 
     @PreAuthorize("hasAuthority('tool:gen:code')")
