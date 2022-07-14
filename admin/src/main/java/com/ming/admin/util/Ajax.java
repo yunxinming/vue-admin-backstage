@@ -36,6 +36,10 @@ public class Ajax extends LinkedHashMap<String, Object> {
         return new Ajax(200, msg, data);
     }
 
+    public static Ajax success(Object data) {
+        return new Ajax(200, "操作成功", data);
+    }
+
     public static Ajax error() {
         return new Ajax(4000);
     }
@@ -48,6 +52,10 @@ public class Ajax extends LinkedHashMap<String, Object> {
 
     public static Ajax error(String msg, Object data) {
         return new Ajax(4000, msg, data);
+    }
+
+    public static Ajax error(Object data) {
+        return new Ajax(4000, "操作失败", data);
     }
 
 }
