@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * <p>
@@ -18,6 +19,19 @@ import java.time.LocalDateTime;
 public class SysMenu implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SysMenu sysMenu = (SysMenu) o;
+        return Objects.equals(menuId, sysMenu.menuId) && Objects.equals(menuName, sysMenu.menuName) && Objects.equals(parentId, sysMenu.parentId) && Objects.equals(orderNum, sysMenu.orderNum) && Objects.equals(path, sysMenu.path) && Objects.equals(component, sysMenu.component) && Objects.equals(query, sysMenu.query) && Objects.equals(isFrame, sysMenu.isFrame) && Objects.equals(isCache, sysMenu.isCache) && Objects.equals(menuType, sysMenu.menuType) && Objects.equals(visible, sysMenu.visible) && Objects.equals(status, sysMenu.status) && Objects.equals(perms, sysMenu.perms) && Objects.equals(icon, sysMenu.icon) && Objects.equals(createBy, sysMenu.createBy) && Objects.equals(createTime, sysMenu.createTime) && Objects.equals(updateBy, sysMenu.updateBy) && Objects.equals(updateTime, sysMenu.updateTime) && Objects.equals(remark, sysMenu.remark);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(menuId, menuName, parentId, orderNum, path, component, query, isFrame, isCache, menuType, visible, status, perms, icon, createBy, createTime, updateBy, updateTime, remark);
+    }
 
     /**
      * 菜单ID
