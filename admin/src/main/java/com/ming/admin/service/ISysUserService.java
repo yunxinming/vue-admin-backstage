@@ -18,4 +18,10 @@ public interface ISysUserService extends IService<SysUser> {
     Ajax login(SysUser user, HttpServletRequest request);
 
     SysUser findUserByUsername(String username);
+
+    Ajax findCurrentUserInfo();
+
+    Ajax editUser(SysUser user);
+
+    Ajax changeUserPassword(String password, String newPassword);
 }
