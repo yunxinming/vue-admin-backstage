@@ -43,4 +43,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         assert menus != null;
         return menus.stream().distinct().collect(Collectors.toList());
     }
+
+    /**
+     * 查询所有的菜单列表
+     * @return
+     */
+    @Override
+    public List<SysMenu> findAllMenu() {
+        return lambdaQuery().list();
+    }
 }

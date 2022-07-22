@@ -2,6 +2,9 @@ package com.ming.admin.mapper;
 
 import com.ming.admin.entity.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
+    @Select("select r.role_id from sys_user_role as ur inner join sys_role as r on r.role_id = ur.role_id where ur.user_id = #{userid}")
+    List<String> selectRoleNameByUserId(Long userid);
 }

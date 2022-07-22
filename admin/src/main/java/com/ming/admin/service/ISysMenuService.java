@@ -17,4 +17,6 @@ public interface ISysMenuService extends IService<SysMenu> {
     List<String> findPermsByUserId(Long userid);
 
     List<SysMenu> findMenus();
+
+    List<SysMenu> findAllMenu();
 }

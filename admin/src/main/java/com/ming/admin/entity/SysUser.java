@@ -125,6 +125,18 @@ public class SysUser implements Serializable, UserDetails {
     @TableField(exist = false)
     private List<String> permission;
 
+    @TableField(exist = false)
+    private List<String> roleIds;
+
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+
     public Long getUserId() {
         return userId;
     }
