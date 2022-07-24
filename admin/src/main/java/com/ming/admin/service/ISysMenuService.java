@@ -2,6 +2,7 @@ package com.ming.admin.service;
 
 import com.ming.admin.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ming.admin.util.Ajax;
 
 import java.util.List;
 
@@ -19,4 +20,10 @@ public interface ISysMenuService extends IService<SysMenu> {
     List<SysMenu> findMenus();
 
     List<SysMenu> findAllMenu();
+
+    Ajax saveMenus(List<SysMenu> menus);
+
+    Ajax updateMenus(List<SysMenu> menus);
+
+    Ajax deleteMenus(List<SysMenu> menus);
 }

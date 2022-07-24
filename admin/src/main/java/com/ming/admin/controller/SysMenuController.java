@@ -4,9 +4,8 @@ import com.ming.admin.entity.SysMenu;
 import com.ming.admin.service.ISysMenuService;
 import com.ming.admin.util.Ajax;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +32,31 @@ public class SysMenuController {
     public Ajax router(){
         List<SysMenu> menus = menuService.findMenus();
         return Ajax.success(menus);
+    }
+
+    @PreAuthorize("hasAnyAuthority('system:menu:list', 'system:menu:query')")
+    @GetMapping("/menus")
+    public Ajax getMenus(){
+        List<SysMenu> allMenu = menuService.findAllMenu();
+        if (allMenu == null) return Ajax.error("获取失败");
+        return Ajax.success(allMenu);
+    }
+
+    @PreAuthorize("hasAuthority('system:menu:add')")
+    @PostMapping("/menus")
+    public Ajax saveMenus(@RequestBody List<SysMenu> menus){
+        return menuService.saveMenus(menus);
+    }
+
+    @PreAuthorize("hasAuthority('system:menu:edit')")
+    @PutMapping("/menus")
+    public Ajax updateMenus(@RequestBody List<SysMenu> menus){
+        return menuService.updateMenus(menus);
+    }
+
+    @PreAuthorize("hasAuthority('system:menu:remove')")
+    @DeleteMapping("/menus")
+    public Ajax deleteMenus(@RequestBody List<SysMenu> menus){
+        return menuService.deleteMenus(menus);
     }
 }
