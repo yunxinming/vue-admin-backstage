@@ -1,7 +1,9 @@
 package com.ming.admin.service;
 
+import com.ming.admin.entity.RolePageOV;
 import com.ming.admin.entity.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ming.admin.util.Ajax;
 
 import java.util.List;
 
@@ -15,4 +17,12 @@ import java.util.List;
  */
 public interface ISysRoleService extends IService<SysRole> {
     List<SysRole> findRoleAll();
+
+    Ajax findRoleLists(RolePageOV roleInfo);
+
+    Ajax saveRoleLists(List<SysRole> roles);
+
+    Ajax updateRoleLists(List<SysRole> roles);
+
+    Ajax deleteRoleLists(List<SysRole> roles);
 }

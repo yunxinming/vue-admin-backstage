@@ -2,9 +2,11 @@ package com.ming.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ming.admin.entity.SysMenu;
+import com.ming.admin.entity.SysRoleMenu;
 import com.ming.admin.entity.SysUser;
 import com.ming.admin.mapper.SysMenuMapper;
 import com.ming.admin.service.ISysMenuService;
+import com.ming.admin.service.ISysRoleMenuService;
 import com.ming.admin.util.Ajax;
 import io.jsonwebtoken.lang.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -28,10 +31,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Autowired
     private SysMenuMapper menuMapper;
 
+    @Autowired
+    private ISysRoleMenuService roleMenuService;
+
     @Override
     public List<String> findPermsByUserId(Long userid) {
         List<SysMenu> sysMenus = menuMapper.selectPermsByUserId(userid);
-        return sysMenus.stream().map(SysMenu::getPerms).filter(Strings::hasText).collect(Collectors.toList());
+        return sysMenus.stream().map(SysMenu::getPerms).filter(Objects::nonNull).filter(Strings::hasText).collect(Collectors.toList());
     }
 
     @Override
@@ -67,7 +73,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             m.setCreateTime(LocalDateTime.now());
             if ("M".equals(m.getMenuType())) {
                 m.setComponent(null);
-                m.setPerms(null);
+                m.setPerms("");
             } else if ("F".equals(m.getMenuType())) {
                 m.setComponent(null);
                 m.setIcon(null);
@@ -90,7 +96,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
             m.setUpdateTime(LocalDateTime.now());
             if ("M".equals(m.getMenuType())) {
                 m.setComponent(null);
-                m.setPerms(null);
+                m.setPerms("");
             } else if ("F".equals(m.getMenuType())) {
                 m.setComponent(null);
                 m.setIcon(null);
@@ -103,6 +109,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Override
     public Ajax deleteMenus(List<SysMenu> menus) {
+        menus.forEach(m -> {
+            roleMenuService.lambdaUpdate().eq(SysRoleMenu::getMenuId, m.getMenuId()).remove();
+        });
         boolean b = removeBatchByIds(menus);
         if (!b) return Ajax.error("删除失败");
         return Ajax.success("删除成功");
